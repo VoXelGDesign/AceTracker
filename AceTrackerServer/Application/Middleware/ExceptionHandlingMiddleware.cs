@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text.Json;
-using Domain.Exepctions;
+using Domain.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 

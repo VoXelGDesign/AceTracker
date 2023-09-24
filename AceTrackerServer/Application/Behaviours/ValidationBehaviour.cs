@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using Infrastructure.Interfaces;
+﻿using Application.Common.Interfaces.Commands;
+using FluentValidation;
 using MediatR;
 
-namespace Application.Behaviors
+namespace Application.Behaviours
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
             where TRequest : class, ICommand<TResponse>
