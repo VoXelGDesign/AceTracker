@@ -3,8 +3,7 @@ using Domain.Enums;
 
 namespace Application.Games.Models.Requests
 {
-    public record CreateGameRequest(int AmountOfChips, int Contribution, IReadOnlyCollection<Player> Players,
-        DateTime Date)
+    public record CreateGameRequest(int AmountOfChips, int Stake)
     {
         public CreateGameCommand ToCommand() =>
             new CreateGameCommand(this);

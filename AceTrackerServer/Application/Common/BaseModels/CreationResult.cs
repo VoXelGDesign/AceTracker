@@ -4,7 +4,7 @@ namespace Application.Common.BaseModels
 {
     public class CreationResult<T> : ICreationResult<T>
     {
-        public T Obj;
+        public T Obj { get; }
         public bool IsSuccessful { get; }
 
         public CreationResult()

@@ -7,26 +7,24 @@ using Application.Common.Interfaces;
 using Application.Games.Models.Responses;
 using Domain.Entities;
 using FluentValidation;
-using Interface.Games.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistance.Data;
-
+using static Application.Games.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "AceTracker API", Version = "v1" });
-    options.AddSignalRSwaggerGen();
 });
 
-builder.Services.AddSignalR();
 
 AuthenticationSettings authenticationSettings = new AuthenticationSettings();
 var issuer = builder.Configuration["Authentication:JwtIssuer"];
@@ -49,7 +47,6 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<ICreationResult<CreateGameResponse>, CreationResult<CreateGameResponse>>();
 
 
-//Authentication
 builder.Services.AddSingleton(authenticationSettings);
 
 builder.Services.AddAuthentication(option =>
@@ -70,19 +67,19 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
-
 builder.Services.AddDbContext<AceTrackerDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration["AceTracker:ConnectionString"], b => b.MigrationsAssembly("Persistance"));
 });
-
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.RegisterServicesFromAssembly(typeof(CreationResult<>).Assembly);
     cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 });
+
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -96,7 +93,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<GameHub>("signalrapi");
+app.MapControllers();
 
 app.Run();
 

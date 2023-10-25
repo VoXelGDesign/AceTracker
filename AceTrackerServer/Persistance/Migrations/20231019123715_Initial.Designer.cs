@@ -9,10 +9,10 @@ using Persistance.Data;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Persistance.Migrations
 {
     [DbContext(typeof(AceTrackerDBContext))]
-    [Migration("20230923222723_Initial")]
+    [Migration("20231019123715_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -36,11 +36,14 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AmountOfChips")
                         .HasColumnType("int");
 
-                    b.Property<int>("Contribution")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Stake")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -56,6 +59,9 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlayerState")
                         .HasColumnType("int");
 
                     b.Property<int>("Score")
@@ -81,21 +87,21 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.Player", b =>

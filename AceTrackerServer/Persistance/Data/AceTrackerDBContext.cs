@@ -7,13 +7,13 @@ namespace Persistance.Data
     {
         public DbSet<Game> Games { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public AceTrackerDBContext(DbContextOptions<AceTrackerDBContext> options)
             :base(options)
         {
             
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Game>()

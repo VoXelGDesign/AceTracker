@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Domain.Shared.Properties
 {
-    public enum GameState
+    internal class ValidationProperties
     {
-        Created,
-        Ended
     }
 }
