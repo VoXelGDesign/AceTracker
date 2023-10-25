@@ -3,6 +3,7 @@ using Application.Common.Interfaces;
 using Application.Games.Models.Requests;
 using Application.Games.Models.Responses;
 using Domain.Entities;
+using Domain.Users;
 using FluentValidation;
 using MediatR;
 using Persistance.Data;

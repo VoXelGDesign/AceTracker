@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
-namespace Domain.Shared.Properties
+namespace Domain.Users.Properties;
+public static class UserValidationProperties
 {
-    internal class ValidationProperties
-    {
-    }
+    private const int _userNameMaxLenght = 255;
+    private static readonly Regex _userPasswordRegex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$", RegexOptions.Compiled);
+
+    public static int UserNameMaxLenght()
+        => _userNameMaxLenght;
+    public static Regex UserPasswordRegex()
+        => _userPasswordRegex;
 }

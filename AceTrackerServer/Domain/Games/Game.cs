@@ -7,7 +7,7 @@ public class Game
 {
     public GameId GameId { get; private set; } = null!;
     public GameStake GameStake { get; private set; } = null!;
-    public int AmountOfChips { get; private set; }
+    public ChipsAmount ChipsAmount { get; private set; } = null!;
     public virtual ICollection<Player> Players { get; private set; } = null!;
     public DateTime Date { get; set; }
     public GameState GameState { get; private set; } = GameState.Created;

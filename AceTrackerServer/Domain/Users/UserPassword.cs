@@ -1,32 +1,25 @@
-﻿using Microsoft.AspNet.Identity;
-using System.Text.RegularExpressions;
+﻿using Domain.Users.Properties;
+using Microsoft.AspNet.Identity;
 
-namespace Domain.Entities
+namespace Domain.Users;
+
+public record UserPassword
 {
-    
-        public record UserPassword
-        {
-            public string Password { get; set; }
-            public string HashedPassword { get; set; }
+    public string HashedPassword { get; set; }
 
-            public UserPassword(string password, string hashedPassword)
-            {
-                Password = password;
-                HashedPassword = hashedPassword;
-            }
-        
-            private static readonly Regex PasswordRegex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$", RegexOptions.Compiled);
+    private UserPassword(string hashedPassword)
+    {
+        HashedPassword = hashedPassword;
+    }
 
-            public static UserPassword? Create(string password, IPasswordHasher passwordHasher)
-            {
-                if (!PasswordRegex.IsMatch(password))
-                {
-                    return null;
-                }
+    public static UserPassword? Create(string password, IPasswordHasher passwordHasher)
+    {
+        if (!UserValidationProperties.UserPasswordRegex().IsMatch(password)) return null;
 
-                var hashedPassword = passwordHasher.HashPassword(password);
-                return new UserPassword(password, hashedPassword);
-            }
-        }
-    
+        var hashedPassword = passwordHasher.HashPassword(password);
+
+        return new UserPassword(hashedPassword);
+    }
 }
+
+
