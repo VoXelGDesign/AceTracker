@@ -20,6 +20,14 @@ public record UserPassword
 
         return new UserPassword(hashedPassword);
     }
+
+    public static UserPassword? FromHashedPassword(string hashedPassword)
+    {
+        if (hashedPassword is null) return null;
+
+        return new UserPassword(hashedPassword);
+    }
+
 }
 
 
